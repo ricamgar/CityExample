@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.utad.networking.data.RetrofitFactory
+import com.utad.networking.model.City
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,6 +13,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
+	
+	private lateinit var citySearch: List<City>
 	
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -27,8 +30,23 @@ class MainActivity : AppCompatActivity() {
 		val weatherApi = RetrofitFactory.getWeatherApi()
 		CoroutineScope(Dispatchers.IO).launch {
 			val response = weatherApi.searchCities()
+			citySearch = response.body()!!
 			withContext(Dispatchers.Main) {
-				citiesAdapter.addCities(response.body()!!)
+				citiesAdapter.addCities(citySearch)
+			}
+		}
+		
+		SearchButton.setOnClickListener {
+			CoroutineScope(Dispatchers.IO).launch {
+				withContext(Dispatchers.Main) {
+					var cityFiltered: ArrayList<City> = ArrayList<City>()
+					for (City in citySearch) {
+						if (City.title.contains("ams", true)) {
+							cityFiltered.add(City)
+						}
+					}
+					citiesAdapter.addCities(cityFiltered)
+				}
 			}
 		}
 	}
