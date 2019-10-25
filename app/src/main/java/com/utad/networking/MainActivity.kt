@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 				withContext(Dispatchers.Main) {
 					var cityFiltered: ArrayList<City> = ArrayList<City>()
 					for (City in citySearch) {
-						if (City.title.contains("ams", true)) {
+						if (City.title.contains(searchText.text.toString(), true)) {
 							cityFiltered.add(City)
 						}
 					}
@@ -54,5 +54,4 @@ class MainActivity : AppCompatActivity() {
 			}
 		}
 	}
-
 }
