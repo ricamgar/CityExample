@@ -24,8 +24,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         var mySearchView = findViewById<SearchView>(R.id.searchViewMain)
+        val weatherApi = RetrofitFactory.getWeatherApi()
 
+        val citiesAdapter = CitiesAdapter {
 
+        }
         mySearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 Toast.makeText(this@MainActivity, "$query", Toast.LENGTH_SHORT).show()
@@ -33,25 +36,26 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(text: String): Boolean {
-                Toast.makeText(this@MainActivity, "$text", Toast.LENGTH_SHORT).show()
+                CoroutineScope(Dispatchers.IO).launch {
+                    val response = weatherApi.searchCities(text)
+                    if(response.isSuccessful){
+                        withContext(Dispatchers.Main) {
+                            citiesAdapter.addCities(response.body()!!)
+                        }
+                    }
+
+                }
                 return false
             }
         })
-        
+
         citiesRecyclerView.layoutManager = LinearLayoutManager(this)
         citiesRecyclerView.setHasFixedSize(true)
 
-        citiesRecyclerView.adapter = CitiesAdapter{
-            
-        }
+        citiesRecyclerView.adapter = citiesAdapter
 
 
-        val weatherApi = RetrofitFactory.getWeatherApi()
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = weatherApi.searchCities()
-            withContext(Dispatchers.Main) {
-                CitiesAdapter.addCities(response.body()!!)
-            }
-        }
+
+
     }
 }
