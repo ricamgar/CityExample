@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.utad.networking.data.RetrofitFactory
 import com.utad.networking.data.WeatherApi
+import com.utad.networking.model.City
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,33 +17,40 @@ import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var searchText : EditText
-    lateinit var searchButton : Button
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        searchText = findViewById(R.id.searchText)
-        searchButton = findViewById(R.id.searchButton)
-        val search = searchText.text.toString()
-
-        citiesRecyclerView.layoutManager = LinearLayoutManager(this)
-        citiesRecyclerView.setHasFixedSize(true)
-        val citiesAdapter = CitiesAdapter {
-            Toast.makeText(this, "${it.title} clicked!!", Toast.LENGTH_SHORT).show()
-        }
-        citiesRecyclerView.adapter = citiesAdapter
-
-        val weatherApi = RetrofitFactory.getWeatherApi()
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = weatherApi.searchCities()
-            withContext(Dispatchers.Main) {
-                citiesAdapter.addCities(response.body()!!)
-            }
-        }
-
-        searchButton.setOnClickListener(){
-
-        }
-    }
+	private lateinit var citySearch: List<City>
+	
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_main)
+		
+		citiesRecyclerView.layoutManager = LinearLayoutManager(this)
+		citiesRecyclerView.setHasFixedSize(true)
+		val citiesAdapter = CitiesAdapter {
+			Toast.makeText(this, "${it.title} clicked!!", Toast.LENGTH_SHORT).show()
+		}
+		citiesRecyclerView.adapter = citiesAdapter
+		
+		val weatherApi = RetrofitFactory.getWeatherApi()
+		CoroutineScope(Dispatchers.IO).launch {
+			val response = weatherApi.searchCities()
+			citySearch = response.body()!!
+			withContext(Dispatchers.Main) {
+				citiesAdapter.addCities(citySearch)
+			}
+		}
+		
+		SearchButton.setOnClickListener {
+			CoroutineScope(Dispatchers.IO).launch {
+				withContext(Dispatchers.Main) {
+					var cityFiltered: ArrayList<City> = ArrayList<City>()
+					for (City in citySearch) {
+						if (City.title.contains("ams", true)) {
+							cityFiltered.add(City)
+						}
+					}
+					citiesAdapter.addCities(cityFiltered)
+				}
+			}
+		}
+	}
 }
