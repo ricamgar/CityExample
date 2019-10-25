@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         val weatherApi = RetrofitFactory.getWeatherApi()
 
         val citiesAdapter = CitiesAdapter {
-
+            
         }
         mySearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
