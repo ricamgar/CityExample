@@ -35,12 +35,15 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
-        
+
         citiesRecyclerView.layoutManager = LinearLayoutManager(this)
         citiesRecyclerView.setHasFixedSize(true)
         val citiesAdapter = CitiesAdapter {
             Toast.makeText(this, "${it.title} clicked!!", Toast.LENGTH_SHORT).show()
         }
+
+
+
         citiesRecyclerView.adapter = citiesAdapter
 
         val weatherApi = RetrofitFactory.getWeatherApi()
