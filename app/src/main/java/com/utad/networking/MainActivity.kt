@@ -15,6 +15,7 @@ import kotlinx.coroutines.withContext
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.util.Log
 import com.utad.networking.CitiesAdapter as CitiesAdapter
 
 
@@ -29,14 +30,16 @@ class MainActivity : AppCompatActivity() {
 
         val citiesAdapter = CitiesAdapter {
             val intent = Intent(this,DetailViewWeather::class.java)
-            intent.putExtra("id",it.woeid)
+            intent.putExtra("id",it.woeid.toInt())
+            Log.e("main",it.woeid)
+
             startActivity(intent)
 
             
         }
         mySearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                Toast.makeText(this@MainActivity, "$query", Toast.LENGTH_SHORT).show()
+
                 return false
             }
 

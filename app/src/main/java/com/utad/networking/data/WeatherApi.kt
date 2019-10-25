@@ -12,7 +12,7 @@ interface WeatherApi {
     @GET("location/search/")
     suspend fun searchCities(@Query("query") searchText: String): Response<List<City>>
 
-    @GET("api/location/")
+    @GET("api/location/{woeid}")
     suspend fun searchCity(@Path("woeid") id: Int): Response<List<Day>>
 }
 

@@ -6,29 +6,47 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.utad.networking.data.Day
 import com.utad.networking.model.City
+import kotlinx.android.synthetic.main.days_item.view.*
 
 class DayAdapter():  RecyclerView.Adapter<DayAdapter.ViewHolder>()  {
+    private var days = listOf<Day>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayAdapter.ViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return ViewHolder.from(parent)
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+       return days.size
     }
 
     override fun onBindViewHolder(holder: DayAdapter.ViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        holder.bind(days[position])
     }
+    fun addDays(newDays :List<Day>){
+        this.days = newDays
+        notifyDataSetChanged()
+    }
+
     class ViewHolder private constructor(view: View): RecyclerView.ViewHolder(view) {
-        private val
+        private val minTemp = view.tempsmin
+        private val maxTemp = view.tempsmax
+        private val temp = view.temepratureItem
+        private val state = view.stateItem
+        private val predicable = view.predictItem
+        private val date = view.dateItem
 
         fun bind(day: Day) {
+            minTemp.text = day.min_temp.toString()
+            maxTemp.text = day.max_temp.toString()
+            temp.text = day.the_temp.toString()
+            state.text = day.wheater_state_name
+            predicable.text = day.predicability.toString()
+            date.text = day.applicable_date
 
         }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.city_item, parent, false)
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.days_item, parent, false)
                 return ViewHolder(view)
             }
         }
