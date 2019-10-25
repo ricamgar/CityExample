@@ -37,13 +37,16 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
-        
+
         citiesRecyclerView.layoutManager = LinearLayoutManager(this)
         citiesRecyclerView.setHasFixedSize(true)
 
         citiesRecyclerView.adapter = CitiesAdapter{
             
         }
+
+
+
 
 
         val weatherApi = RetrofitFactory.getWeatherApi()
