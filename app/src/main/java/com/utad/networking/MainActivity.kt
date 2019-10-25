@@ -1,6 +1,7 @@
 package com.utad.networking
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,15 +22,22 @@ class MainActivity : AppCompatActivity() {
         citiesRecyclerView.setHasFixedSize(true)
         val citiesAdapter = CitiesAdapter {
             Toast.makeText(this, "${it.title} clicked!!", Toast.LENGTH_SHORT).show()
+            if (it.title.equals("San Francisco")){
+                button.text = "Funciona"
+            }
         }
         citiesRecyclerView.adapter = citiesAdapter
+
 
         val weatherApi = RetrofitFactory.getWeatherApi()
         CoroutineScope(Dispatchers.IO).launch {
             val response = weatherApi.searchCities()
+            Log.e("MainActivity", "----------------------------------------")
+            Log.e("MainActivity", response.toString())
             withContext(Dispatchers.Main) {
                 citiesAdapter.addCities(response.body()!!)
             }
         }
+
     }
 }
