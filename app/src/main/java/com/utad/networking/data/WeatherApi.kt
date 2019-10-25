@@ -12,7 +12,7 @@ interface WeatherApi {
     @GET("location/search/?query={query}")
     suspend fun searchCities(@Path("query" ) searchText :String): Response<List<City>>
     @GET("api/location/{woeid}/")
-    suspend fun searchCity(@Path("woeid") id: Int):Response
+    suspend fun searchCity(@Path("woeid") id: Int):Response<List<City>>
 }
 
 
