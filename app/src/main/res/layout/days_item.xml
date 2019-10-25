@@ -54,13 +54,9 @@
         android:layout_marginBottom="8dp"
         android:text="Predicatibility"
         app:layout_constraintBottom_toBottomOf="parent"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.92"
-        app:layout_constraintStart_toEndOf="@+id/dateItem"
-        app:layout_constraintTop_toBottomOf="@id/temepratureItem"
-        app:layout_constraintVertical_bias="0.050000012" />
-
+        app:layout_constraintEnd_toEndOf="@+id/tempsmin"
+        app:layout_constraintStart_toStartOf="@+id/tempsmin"
+        app:layout_constraintTop_toBottomOf="@+id/tempsmin" />
 
     <TextView
         android:id="@+id/dateItem"
