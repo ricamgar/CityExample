@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 		val citiesAdapter = CitiesAdapter {
 			Toast.makeText(this, "${it.title} clicked!!", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, CityDetailActivity::class.java)
+			intent.putExtra("id",it.woeid)
             startActivity(intent)
 		}
 		citiesRecyclerView.adapter = citiesAdapter
