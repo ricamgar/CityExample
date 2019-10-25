@@ -10,7 +10,8 @@ interface WeatherApi {
 	@GET("location/search/?query=a")
 	suspend fun searchCities(): Response<List<City>>
 }
-
+//@GET("location/search/?query={query}")
+//	    suspend fun searchCities(@Path("query" ) searchText :String): Response<List<City>>
 
 object RetrofitFactory {
 	const val BASE_URL = "https://www.metaweather.com/api/"
