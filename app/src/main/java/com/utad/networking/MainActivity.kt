@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         }
         citiesRecyclerView.adapter = citiesAdapter
 
+
         val weatherApi = RetrofitFactory.getWeatherApi()
         CoroutineScope(Dispatchers.IO).launch {
             val response = weatherApi.searchCities()
