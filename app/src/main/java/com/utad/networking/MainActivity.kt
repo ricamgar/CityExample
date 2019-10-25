@@ -12,24 +12,24 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        citiesRecyclerView.layoutManager = LinearLayoutManager(this)
-        citiesRecyclerView.setHasFixedSize(true)
-        val citiesAdapter = CitiesAdapter {
-            Toast.makeText(this, "${it.title} clicked!!", Toast.LENGTH_SHORT).show()
-        }
-        citiesRecyclerView.adapter = citiesAdapter
-
-        val weatherApi = RetrofitFactory.getWeatherApi()
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = weatherApi.searchCities()
-            withContext(Dispatchers.Main) {
-                citiesAdapter.addCities(response.body()!!)
-            }
-        }
-    }
+	
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.activity_main)
+		
+		citiesRecyclerView.layoutManager = LinearLayoutManager(this)
+		citiesRecyclerView.setHasFixedSize(true)
+		val citiesAdapter = CitiesAdapter {
+			Toast.makeText(this, "${it.title} clicked!!", Toast.LENGTH_SHORT).show()
+		}
+		citiesRecyclerView.adapter = citiesAdapter
+		
+		val weatherApi = RetrofitFactory.getWeatherApi()
+		CoroutineScope(Dispatchers.IO).launch {
+			val response = weatherApi.searchCities()
+			withContext(Dispatchers.Main) {
+				citiesAdapter.addCities(response.body()!!)
+			}
+		}
+	}
 }
