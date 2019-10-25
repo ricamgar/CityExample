@@ -10,65 +10,67 @@
         android:id="@+id/temepratureItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="60dp"
         android:text="Temperature"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/tempsmax"
+        app:layout_constraintEnd_toStartOf="@+id/tempsmax"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/stateItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Estate"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        android:text="TempMin"
-        app:layout_constraintBottom_toTopOf="@+id/predictItem"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tempsmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="24dp"
+        android:text="TempMin"
+        app:layout_constraintBottom_toBottomOf="@+id/tempsmax"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tempsmax" />
+
+    <TextView
+        android:id="@+id/tempsmax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="TempMax"
-        app:layout_constraintStart_toEndOf="@+id/temepratureItem"
-        app:layout_constraintTop_toBottomOf="@+id/stateItem" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/stateItem"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toStartOf="@+id/stateItem"
+        app:layout_constraintTop_toBottomOf="@+id/stateItem"
+        app:layout_constraintVertical_bias="0.309" />
 
     <TextView
         android:id="@+id/predictItem"
         android:layout_width="85dp"
         android:layout_height="15dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
         android:text="Predicatibility"
         app:layout_constraintBottom_toBottomOf="parent"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.92"
         app:layout_constraintStart_toEndOf="@+id/dateItem"
         app:layout_constraintTop_toBottomOf="@id/temepratureItem"
         app:layout_constraintVertical_bias="0.050000012" />
 
+
     <TextView
         android:id="@+id/dateItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
         android:text="aplicable_date"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/temepratureItem"
-        app:layout_constraintVertical_bias="0.050000012" />
+        app:layout_constraintEnd_toEndOf="@+id/temepratureItem"
+        app:layout_constraintStart_toStartOf="@+id/temepratureItem"
+        app:layout_constraintTop_toBottomOf="@+id/temepratureItem" />
 </androidx.constraintlayout.widget.ConstraintLayout>
