@@ -1,6 +1,7 @@
 package com.utad.networking
 
 import android.os.Bundle
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +22,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var mySearchView = findViewById<SearchView>(R.id.searchViewMain)
+
+
+        mySearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(text: String): Boolean {
+                Toast.makeText(this@MainActivity, "$text", Toast.LENGTH_SHORT).show()
+                return false
+            }
+        })
+        
         citiesRecyclerView.layoutManager = LinearLayoutManager(this)
         citiesRecyclerView.setHasFixedSize(true)
         val citiesAdapter = CitiesAdapter {

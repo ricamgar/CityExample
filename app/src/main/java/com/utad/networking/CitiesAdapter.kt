@@ -11,6 +11,7 @@ class CitiesAdapter(private val listener: (City) -> Unit): RecyclerView.Adapter<
 
     private var cities = listOf<City>()
 
+
     fun addCities(newCities: List<City>) {
         this.cities = newCities
         notifyDataSetChanged()
