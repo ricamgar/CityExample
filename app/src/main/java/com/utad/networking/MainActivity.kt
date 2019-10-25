@@ -2,14 +2,10 @@ package com.utad.networking
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.utad.networking.data.RetrofitFactory
-import com.utad.networking.data.WeatherApi
 import com.utad.networking.model.City
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
