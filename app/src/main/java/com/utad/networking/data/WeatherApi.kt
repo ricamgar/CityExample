@@ -1,5 +1,6 @@
-package com.utad.networking
+package com.utad.networking.data
 
+import com.utad.networking.model.City
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -9,11 +10,6 @@ interface WeatherApi {
     @GET("location/search/?query=a")
     suspend fun searchCities(): Response<List<City>>
 }
-
-data class City(
-    val woeid: String,
-    val title: String
-)
 
 
 object RetrofitFactory {
