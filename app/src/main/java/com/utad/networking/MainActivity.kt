@@ -1,5 +1,6 @@
 package com.utad.networking
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.SearchView
 import android.widget.Toast
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
         val weatherApi = RetrofitFactory.getWeatherApi()
 
         val citiesAdapter = CitiesAdapter {
+            val intent = Intent(this,DetailViewWeather::class.java)
+            intent.putExtra("id",it.woeid)
+            startActivity(intent)
+
             
         }
         mySearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -60,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-     
+
 
     }
 }

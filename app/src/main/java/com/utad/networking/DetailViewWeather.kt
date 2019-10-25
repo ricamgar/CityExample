@@ -11,6 +11,7 @@ class DetailViewWeather : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.content_detail_view_weather)
+        
 
 
     }
