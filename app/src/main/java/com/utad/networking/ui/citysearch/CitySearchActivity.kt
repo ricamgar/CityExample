@@ -2,6 +2,8 @@ package com.utad.networking.ui.citysearch
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.utad.networking.R
@@ -34,11 +36,22 @@ class CitySearchActivity : AppCompatActivity(), CitySearchView {
 
     override fun showCities(cities: List<City>) {
         citiesAdapter.addCities(cities)
+        citiesRecyclerView.visibility = View.VISIBLE
+        emptyView.visibility = View.GONE
     }
 
     override fun openCityDetail(woeid: Int) {
         val intent = Intent(this, CityDetailActivity::class.java)
         intent.putExtra("city_id", woeid)
         startActivity(intent)
+    }
+
+    override fun showError() {
+        Toast.makeText(this, "Error fetching cities", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showEmpty() {
+        emptyView.visibility = View.VISIBLE
+        citiesRecyclerView.visibility = View.GONE
     }
 }

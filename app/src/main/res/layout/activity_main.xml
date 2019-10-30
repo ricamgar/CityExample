@@ -35,4 +35,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/queryTxt" />
+
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No results"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/citiesRecyclerView"
+        app:layout_constraintStart_toStartOf="@+id/citiesRecyclerView"
+        app:layout_constraintTop_toTopOf="@+id/citiesRecyclerView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

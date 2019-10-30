@@ -16,7 +16,16 @@ class CitySearchPresenter(val view: CitySearchView) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = weatherApi.searchCities(searchTerm)
             withContext(Dispatchers.Main) {
-                view.showCities(response.body()!!)
+                if (response.isSuccessful) {
+                    val cities = response.body()!!
+                    if (cities.isEmpty()) {
+                        view.showEmpty()
+                        return@withContext
+                    }
+                    view.showCities(response.body()!!)
+                } else {
+                    view.showError()
+                }
             }
         }
     }
@@ -29,4 +38,6 @@ class CitySearchPresenter(val view: CitySearchView) {
 interface CitySearchView {
     fun showCities(cities: List<City>)
     fun openCityDetail(woeid: Int)
+    fun showError()
+    fun showEmpty()
 }
