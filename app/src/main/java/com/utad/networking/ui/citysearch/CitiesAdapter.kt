@@ -1,10 +1,11 @@
-package com.utad.networking
+package com.utad.networking.ui.citysearch
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.utad.networking.R
 import com.utad.networking.model.City
 
 class CitiesAdapter(private val listener: (City) -> Unit): RecyclerView.Adapter<CitiesAdapter.ViewHolder>() {
