@@ -5,10 +5,11 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface WeatherApi {
-    @GET("location/search/?query=a")
-    suspend fun searchCities(): Response<List<City>>
+    @GET("location/search/")
+    suspend fun searchCities(@Query("query") term: String): Response<List<City>>
 }
 
 

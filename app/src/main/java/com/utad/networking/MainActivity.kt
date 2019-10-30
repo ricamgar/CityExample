@@ -1,6 +1,7 @@
 package com.utad.networking
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,11 +25,16 @@ class MainActivity : AppCompatActivity() {
         }
         citiesRecyclerView.adapter = citiesAdapter
 
-        val weatherApi = RetrofitFactory.getWeatherApi()
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = weatherApi.searchCities()
-            withContext(Dispatchers.Main) {
-                citiesAdapter.addCities(response.body()!!)
+        searchBtn.setOnClickListener {
+            val searchTerm = queryTxt.text.toString()
+            if (searchTerm.isEmpty()) return@setOnClickListener
+
+            val weatherApi = RetrofitFactory.getWeatherApi()
+            CoroutineScope(Dispatchers.IO).launch {
+                val response = weatherApi.searchCities(searchTerm)
+                withContext(Dispatchers.Main) {
+                    citiesAdapter.addCities(response.body()!!)
+                }
             }
         }
     }
