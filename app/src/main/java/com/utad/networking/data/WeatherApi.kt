@@ -6,9 +6,7 @@ import com.utad.networking.model.WeatherResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface WeatherApi {
     @GET("location/search/")
@@ -27,5 +25,12 @@ object RetrofitFactory {
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .build().create(WeatherApi::class.java)
+    }
+
+    fun login(username: String, password: String): Boolean {
+        if (username.equals("root") && password.equals("1234")) {
+            return true
+        }
+        return false
     }
 }

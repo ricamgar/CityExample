@@ -1,37 +1,53 @@
 package com.utad.networking.ui.citysearch
 
-import com.utad.networking.data.RetrofitFactory
+import android.accounts.NetworkErrorException
+import com.utad.networking.data.local.LocalRepository
+import com.utad.networking.data.remote.RemoteRepository
 import com.utad.networking.model.City
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CitySearchPresenter(val view: CitySearchView) {
+class CitySearchPresenter(
+    val view: CitySearchView,
+    val remoteRepository: RemoteRepository,
+    val localRepository: LocalRepository
+) {
 
     fun searchClicked(searchTerm: String) {
         if (searchTerm.isEmpty()) return
 
-        val weatherApi = RetrofitFactory.getWeatherApi()
         CoroutineScope(Dispatchers.IO).launch {
-            val response = weatherApi.searchCities(searchTerm)
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    val cities = response.body()!!
+            try {
+                val cities = remoteRepository.searchCities(searchTerm)
+                withContext(Dispatchers.Main) {
                     if (cities.isEmpty()) {
                         view.showEmpty()
                         return@withContext
                     }
-                    view.showCities(response.body()!!)
-                } else {
+                    view.showCities(cities)
+                }
+            } catch (e: NetworkErrorException) {
+                withContext(Dispatchers.Main) {
                     view.showError()
                 }
             }
+
         }
     }
 
     fun cityClicked(city: City) {
         view.openCityDetail(city.woeid)
+    }
+
+    fun logoutClicked() {
+        CoroutineScope(Dispatchers.IO).launch {
+            localRepository.deleteLoggedUser()
+            withContext(Dispatchers.Main) {
+                view.goToLogin()
+            }
+        }
     }
 }
 
@@ -40,4 +56,5 @@ interface CitySearchView {
     fun openCityDetail(woeid: Int)
     fun showError()
     fun showEmpty()
+    fun goToLogin()
 }
