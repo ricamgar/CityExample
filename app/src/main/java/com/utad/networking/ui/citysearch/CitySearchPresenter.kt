@@ -1,6 +1,5 @@
 package com.utad.networking.ui.citysearch
 
-import android.accounts.NetworkErrorException
 import com.utad.networking.data.local.LocalRepository
 import com.utad.networking.data.remote.RemoteRepository
 import com.utad.networking.model.City
@@ -28,7 +27,7 @@ class CitySearchPresenter(
                     }
                     view.showCities(cities)
                 }
-            } catch (e: NetworkErrorException) {
+            } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     view.showError()
                 }

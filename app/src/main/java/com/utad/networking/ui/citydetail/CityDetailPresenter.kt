@@ -1,6 +1,5 @@
 package com.utad.networking.ui.citydetail
 
-import android.accounts.NetworkErrorException
 import com.utad.networking.data.remote.RemoteRepository
 import com.utad.networking.model.WeatherDetail
 import kotlinx.coroutines.CoroutineScope
@@ -10,7 +9,8 @@ import kotlinx.coroutines.withContext
 
 class CityDetailPresenter(
     private val view: CityDetailView,
-    private val remoteRepository: RemoteRepository) {
+    private val remoteRepository: RemoteRepository
+) {
 
     fun fetchCityDetail(cityId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -19,7 +19,7 @@ class CityDetailPresenter(
                 withContext(Dispatchers.Main) {
                     view.showWeatherDetail(city.consolidated_weather)
                 }
-            } catch (e: NetworkErrorException) {
+            } catch (e: Exception) {
                 view.showError()
             }
         }
