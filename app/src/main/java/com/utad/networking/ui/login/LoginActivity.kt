@@ -3,14 +3,14 @@ package com.utad.networking.ui.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.utad.networking.R
 import com.utad.networking.data.local.PreferenceLocalRepository
+import com.utad.networking.data.remote.RetrofitFactory
+import com.utad.networking.data.remote.RetrofitRemoteRepository
 import com.utad.networking.ui.citysearch.CitySearchActivity
 
 class LoginActivity : AppCompatActivity(), LoginView {
@@ -36,7 +36,8 @@ class LoginActivity : AppCompatActivity(), LoginView {
                     Context.MODE_PRIVATE
                 )
             )
-        val presenter = LoginPresenter(this, localRepository)
+        val remoteRepository = RetrofitRemoteRepository(RetrofitFactory.getWeatherApi())
+        val presenter = LoginPresenter(this, localRepository, remoteRepository)
 
         loginBtn.setOnClickListener {
             val username = usernameTxt.text.toString()

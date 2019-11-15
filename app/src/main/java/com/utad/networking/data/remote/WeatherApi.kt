@@ -1,7 +1,6 @@
-package com.utad.networking.data
+package com.utad.networking.data.remote
 
 import com.utad.networking.model.City
-import com.utad.networking.model.WeatherDetail
 import com.utad.networking.model.WeatherResponse
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -25,12 +24,5 @@ object RetrofitFactory {
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .build().create(WeatherApi::class.java)
-    }
-
-    fun login(username: String, password: String): Boolean {
-        if (username.equals("root") && password.equals("1234")) {
-            return true
-        }
-        return false
     }
 }

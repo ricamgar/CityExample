@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.utad.networking.R
-import com.utad.networking.data.RetrofitFactory
+import com.utad.networking.data.remote.RetrofitFactory
 import com.utad.networking.data.local.PreferenceLocalRepository
 import com.utad.networking.data.remote.RemoteRepository
 import com.utad.networking.data.remote.RetrofitRemoteRepository

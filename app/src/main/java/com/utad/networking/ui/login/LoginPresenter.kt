@@ -1,13 +1,18 @@
 package com.utad.networking.ui.login
 
-import com.utad.networking.data.RetrofitFactory
 import com.utad.networking.data.local.LocalRepository
+import com.utad.networking.data.remote.RemoteRepository
 import com.utad.networking.model.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class LoginPresenter(val view: LoginView, val localRepository: LocalRepository) {
+class LoginPresenter(
+    private val view: LoginView,
+    private val localRepository: LocalRepository,
+    private val remoteRepository: RemoteRepository
+) {
 
     fun init() {
         CoroutineScope(Dispatchers.IO).launch {
@@ -31,15 +36,19 @@ class LoginPresenter(val view: LoginView, val localRepository: LocalRepository) 
             return
         }
 
-        if (RetrofitFactory.login(username, password)) {
-            CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).launch {
+            val loggedUser = remoteRepository.login(username, password)
+            if (loggedUser != null) {
                 localRepository.setLoggedUser(User(username, password))
+                withContext(Dispatchers.Main) {
+                    view.showLoginSuccessful()
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    view.showLoginError()
+                }
             }
-            view.showLoginSuccessful()
-        } else {
-            view.showLoginError()
         }
-
     }
 
     fun onClearClicked() {
