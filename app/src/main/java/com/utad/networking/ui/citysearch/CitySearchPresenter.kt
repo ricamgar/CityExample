@@ -3,24 +3,23 @@ package com.utad.networking.ui.citysearch
 import com.utad.networking.data.local.LocalRepository
 import com.utad.networking.data.remote.RemoteRepository
 import com.utad.networking.model.City
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class CitySearchPresenter(
-    val view: CitySearchView,
-    val remoteRepository: RemoteRepository,
-    val localRepository: LocalRepository
+    private val view: CitySearchView,
+    private val remoteRepository: RemoteRepository,
+    private val localRepository: LocalRepository,
+    private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
     fun searchClicked(searchTerm: String) {
         if (searchTerm.isEmpty()) return
 
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(ioDispatcher).launch {
             try {
                 val cities = remoteRepository.searchCities(searchTerm)
-                withContext(Dispatchers.Main) {
+                withContext(mainDispatcher) {
                     if (cities.isEmpty()) {
                         view.showEmpty()
                         return@withContext
@@ -41,9 +40,9 @@ class CitySearchPresenter(
     }
 
     fun logoutClicked() {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(ioDispatcher).launch {
             localRepository.deleteLoggedUser()
-            withContext(Dispatchers.Main) {
+            withContext(mainDispatcher) {
                 view.goToLogin()
             }
         }
