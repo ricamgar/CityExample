@@ -19,12 +19,11 @@ import org.mockito.junit.MockitoJUnitRunner
 class CitySearchPresenterTest {
 
     private lateinit var presenter: CitySearchPresenter
-    @Mock
-    private lateinit var remoteRepository: RemoteRepository
-    @Mock
-    private lateinit var localRepository: LocalRepository
-    @Mock
-    private lateinit var view: CitySearchView
+    @Mock private lateinit var remoteRepository: RemoteRepository
+    @Mock private lateinit var localRepository: LocalRepository
+    @Mock private lateinit var view: CitySearchView
+
+
 
     @Before
     fun setUp() {
@@ -38,7 +37,7 @@ class CitySearchPresenterTest {
     }
 
     @Test
-    fun searchClickedShouldShowResults() = runBlocking {
+    fun searchClickedShouldShowResultsIfExists() = runBlocking {
         val city = City(123, "City")
         val search = "searchTerm"
         whenever(remoteRepository.searchCities(search)).thenReturn(listOf(city))
@@ -47,5 +46,14 @@ class CitySearchPresenterTest {
 
         verify(view).showCities(listOf(city))
 
+    }
+
+    @Test(expected = Exception::class)
+    fun shouldShowErrorWhenSearchFails() = runBlocking {
+        whenever(remoteRepository.searchCities("")).thenThrow()
+
+        presenter.searchClicked("")
+
+        verify(view).showError()
     }
 }
