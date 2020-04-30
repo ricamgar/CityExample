@@ -1,6 +1,7 @@
 package com.utad.networking.ui.citydetail
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.utad.networking.R
@@ -24,6 +25,7 @@ class CityDetailActivity : AppCompatActivity(), CityDetailView {
 
     override fun showWeatherDetail(detail: List<WeatherDetail>) {
         // show details in a list
+        Log.e("DETAIL", detail.toString())
     }
 
     override fun showError() {

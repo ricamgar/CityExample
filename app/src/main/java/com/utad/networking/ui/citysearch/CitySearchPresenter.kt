@@ -16,27 +16,23 @@ class CitySearchPresenter(
     fun searchClicked(searchTerm: String) {
         if (searchTerm.isEmpty()) return
 
-        CoroutineScope(ioDispatcher).launch {
+        CoroutineScope(mainDispatcher).launch {
             try {
-                val cities = remoteRepository.searchCities(searchTerm)
-                withContext(mainDispatcher) {
-                    if (cities.isEmpty()) {
-                        view.showEmpty()
-                        return@withContext
-                    }
-                    view.showCities(cities)
+                val cities = withContext(ioDispatcher) { remoteRepository.searchCities(searchTerm) }
+                if (cities.isEmpty()) {
+                    view.showEmpty()
+                    return@launch
                 }
+                view.showCities(cities)
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    view.showError()
-                }
+                view.showError()
             }
 
         }
     }
 
     fun cityClicked(city: City) {
-        view.openCityDetail(city.woeid)
+        view.openCityDetail(city.id)
     }
 
     fun logoutClicked() {

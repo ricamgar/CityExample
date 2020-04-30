@@ -1,6 +1,9 @@
 package com.utad.networking.model
 
+import com.google.gson.annotations.SerializedName
+
 data class City(
-    val woeid: Int,
+    @SerializedName("woeid")
+    val id: Int,
     val title: String
 )

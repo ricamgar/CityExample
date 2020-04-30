@@ -13,12 +13,10 @@ class CityDetailPresenter(
 ) {
 
     fun fetchCityDetail(cityId: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             try {
-                val city = remoteRepository.getCityDetail(cityId)
-                withContext(Dispatchers.Main) {
-                    view.showWeatherDetail(city.consolidated_weather)
-                }
+                val city = withContext(Dispatchers.IO) { remoteRepository.getCityDetail(cityId) }
+                view.showWeatherDetail(city.consolidated_weather)
             } catch (e: Exception) {
                 view.showError()
             }
